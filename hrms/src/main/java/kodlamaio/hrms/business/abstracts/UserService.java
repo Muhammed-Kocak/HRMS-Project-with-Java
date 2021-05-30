@@ -8,7 +8,7 @@ import kodlamaio.hrms.entities.concretes.User;
 
 public interface UserService {
 	DataResult<List<User>> getAll();
+	DataResult<User> getByEmail(String email);
 	Result add(User user);
-	Result checkUser(String email);
-	DataResult<User> getUserDetailByMail(String userMail);
+	Result verifyUser(String email,String verificationCode);
 }

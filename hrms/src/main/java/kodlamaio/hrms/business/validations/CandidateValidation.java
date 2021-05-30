@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kodlamaio.hrms.entities.concretes.Candidate;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 
 public class CandidateValidation {
 
@@ -25,20 +26,20 @@ public class CandidateValidation {
 	}
 
 	public static boolean birthDateChecker(Candidate candidate) {
-		if (candidate.getDateOfBirth().equals(null)) {
+		if (candidate.getBirthOfDate().equals(null)) {
 			return false;
 
 		}
 		return true;
 	}
 
-	public static boolean isValid(Candidate candidate) {
+	public static boolean isValid(CandidateForRegisterDto candidateForRegisterDto) {
 		String regex = "^(.+)@(.+)$";
 		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(candidate.getEmail());
+		Matcher matcher = pattern.matcher(candidateForRegisterDto.getEmail());
 
-		if (candidate.getFirstName() == null || candidate.getLastName() == null || candidate.getEmail() == null
-				|| candidate.getPassword() == null) {
+		if (candidateForRegisterDto.getFirstName() == null || candidateForRegisterDto.getLastName() == null || candidateForRegisterDto.getEmail() == null
+				|| candidateForRegisterDto.getPassword() == null) {
 			System.out.println("Boş bırakılamaz");
 			return false;
 		} else {
@@ -48,8 +49,8 @@ public class CandidateValidation {
 			}
 
 			else {
-				if (candidate.getFirstName().length() < 2 && candidate.getLastName().length() < 2) {
-					if (candidate.getPassword().length() < 6) {
+				if (candidateForRegisterDto.getFirstName().length() < 2 && candidateForRegisterDto.getLastName().length() < 2) {
+					if (candidateForRegisterDto.getPassword().length() < 6) {
 						System.out.println("Şifreniz en az 6 haneli olmak zorunda.");
 						return false;
 					}

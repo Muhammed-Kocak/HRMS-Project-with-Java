@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sun.istack.NotNull;
-
 import kodlamaio.hrms.business.abstracts.UserService;
-import kodlamaio.hrms.business.validations.UserValidation;
-import kodlamaio.hrms.core.utilities.constants.Messages;
+import kodlamaio.hrms.core.adapters.activationService.simplifiedStructure.EmailService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
@@ -22,43 +19,44 @@ import kodlamaio.hrms.entities.concretes.User;
 public class UserManager implements UserService {
 
 	private UserDao userDao;
+	private EmailService emailService;
 
 	@Autowired
-	public UserManager(UserDao userDao) {
+	public UserManager(UserDao userDao, EmailService emailService) {
+		super();
 		this.userDao = userDao;
+		this.emailService = emailService;
 	}
 
 	@Override
 	public DataResult<List<User>> getAll() {
-		return new SuccessDataResult<List<User>>(this.userDao.findAll(), Messages.usersListed);
+		return new SuccessDataResult<List<User>>(userDao.findAll());
 	}
 
 	@Override
-	public Result add(@NotNull User user) {
-		if (UserValidation.isValid(user)) {
-			var result = this.checkUser(user.getEmail());
-			if (!result.isSuccess()) {
-				return new ErrorResult(result.getMessage());
-			}
-			this.userDao.save(user);
-			return new SuccessResult(Messages.userAdded);
-		}
-		return new ErrorResult(Messages.ValidationIsIncorrect);
+	public DataResult<User> getByEmail(String email) {
+		return new SuccessDataResult<User>(userDao.findByEmail(email));
 	}
 
 	@Override
-	public Result checkUser(@NotNull String email) {
-
-		var result = this.userDao.getByUserDetail(email);
-		if (result.getEmail() != null) {
-			return new ErrorResult(Messages.userValid);
-		}
+	public Result add(User user) {
+		this.userDao.save(user);
+		this.emailService.send(user.getEmail(), "Doğrulama Linki",
+				"HRMS Sistemine hoşgeldiniz. " + "Aşşağıdaki linke tıklayarak üyeliğinizi doğrulayabilirsiniz \n "
+						+ "www.localhost:8080/api/users/verify?email=" + user.getEmail() + "&verifycode="
+						+ user.getEmailVerifyCode());
 		return new SuccessResult();
 	}
 
 	@Override
-	public DataResult<User> getUserDetailByMail(String userMail) {
-		return new SuccessDataResult<User>(this.userDao.getByUserDetail(userMail));
+	public Result verifyUser(String email, String verificationCode) {
+		User user = userDao.findByEmailAndEmailVerifyCode(email, verificationCode);
+		if (user == null)
+			return new ErrorResult("Doğrulama başarısız lütfen bilgileri doğru girdiğinizden emin olun.");
+
+		user.setEmailVerified(true);
+		userDao.save(user);
+		return new SuccessResult("Kullanıcı e-postası başarıyla doğrulandı.");
 	}
 
 }

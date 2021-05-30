@@ -34,5 +34,8 @@ public class VerifyActivationCode {
 	
 	@Column(name = "confirm_date")
 	private LocalDate date;
+	
+	@Column(name = "verification_type_id")
+	private LocalDate verificationTypeId;
 
 }
