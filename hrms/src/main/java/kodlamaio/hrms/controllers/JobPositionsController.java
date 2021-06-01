@@ -26,7 +26,6 @@ public class JobPositionsController {
 	}
 
 	@GetMapping("/getall")
-	@RequestMapping(method = RequestMethod.GET)
 	public DataResult<List<JobPosition>> getAll() {
 		var result = this.jobPositionService.getAll();
 
@@ -38,7 +37,6 @@ public class JobPositionsController {
 	}
 
 	@PostMapping("/add")
-	@RequestMapping(method = RequestMethod.POST)
 	public Result add(JobPosition jobPosition) {
 		Result result = this.jobPositionService.add(jobPosition);
 
@@ -50,7 +48,6 @@ public class JobPositionsController {
 	}
 
 	@GetMapping("/getbyname")
-	@RequestMapping(method = RequestMethod.GET)
 	public DataResult<JobPosition> getByPositionName(String positionName) {
 		var result = this.jobPositionService.getByPositionName(positionName);
 
@@ -62,7 +59,6 @@ public class JobPositionsController {
 	}
 
 	@GetMapping("/getbyid")
-	@RequestMapping(method = RequestMethod.GET)
 	public DataResult<JobPosition> getById(int id) {
 
 		var result = this.jobPositionService.getById(id);

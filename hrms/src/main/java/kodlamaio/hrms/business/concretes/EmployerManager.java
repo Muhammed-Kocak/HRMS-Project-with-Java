@@ -36,13 +36,17 @@ public class EmployerManager implements EmployerService {
 	public DataResult<List<Employer>> getAll() {
 		return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), Messages.employerListed);
 	}
-
+//employer.getCompanyName(),employer.getPhoneNumber(), false, employer.getWebAdress()
 	@Override
 	public Result register(EmployerForRegisterDto employer) {
 		if(runAllRegisterRules(employer) != null) return runAllRegisterRules(employer);
 		User userToRegister = new User(employer.getEmail(), employer.getPassword(),false, UUID.randomUUID().toString());
 		userService.add(userToRegister);
-		Employer employerToRegister = new Employer(userToRegister.getId(),employer.getCompanyName(),employer.getPhoneNumber(), false, employer.getWebAdress());
+		Employer employerToRegister = new Employer();
+		employerToRegister.setEmail(employer.getCompanyName());
+		employerToRegister.setEmailVerified(false);
+		employerToRegister.setEmailVerifyCode( UUID.randomUUID().toString());
+		employerToRegister.setPassword(employer.getPassword());
 		this.employerDao.save(employerToRegister);
 		return new SuccessResult("İş veren başarıyla kayıt oldu. Lütfen e-posta adresinize gönderilen linke tıklayarak üyeliğinizi doğrulayın.");
 	}

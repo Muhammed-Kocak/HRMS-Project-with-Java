@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name="verify_for_employers")
 @AllArgsConstructor
 @NoArgsConstructor
-public class VerifyForEmployer extends VerifyActivationCode{
+public class VerifyForEmployer{
 
 	@Id
 	@Column(name="id")

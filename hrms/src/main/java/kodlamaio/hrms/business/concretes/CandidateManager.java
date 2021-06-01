@@ -47,7 +47,6 @@ public class CandidateManager implements CandidateService {
 	User userToRegister = new User(candidate.getEmail(), candidate.getPassword(),false, UUID.randomUUID().toString());
 		userService.add(userToRegister);
 		Candidate candidateToRegister = new Candidate(
-				userToRegister.getId(), 
 				candidate.getFirstName(),
 				candidate.getLastName(), 
 				candidate.getNationalityIdentityId(),
@@ -91,7 +90,7 @@ public class CandidateManager implements CandidateService {
 		return null;
 	}
 	private Result isUserExistWithNationalityId(CandidateForRegisterDto candidate) {
-		if(candidateDao.findByNationalityId(candidate.getNationalityIdentityId()) != null)
+		if(candidateDao.findByNationalityIdentityId(candidate.getNationalityIdentityId()) != null)
 			return new ErrorResult("Bu TCKN ile başka bir kullanıcı mevcut.");
 		return null;
 	}

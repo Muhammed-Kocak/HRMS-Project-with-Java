@@ -34,11 +34,16 @@ private EmployeeDao employeeDao;
 
 	@Override
 	public Result add(Employee employee) {
-		if(EmployeeValidation.firstNameChecker(employee)&&EmployeeValidation.lastNameChecker(employee)) {
-			this.employeeDao.save(employee);
-			return new SuccessResult(Messages.employeeAdded);
+		boolean result = this.employeeDao.findByEmployerByUser_Email(employee.getEmail());
+		if(result) {
+			if(EmployeeValidation.firstNameChecker(employee)&&EmployeeValidation.lastNameChecker(employee)) {
+				this.employeeDao.save(employee);
+				return new SuccessResult(Messages.employeeAdded);
+			}
+			return new ErrorResult(Messages.ValidationIsIncorrect);
 		}
-		return new ErrorResult(Messages.ValidationIsIncorrect);
+		return new ErrorResult("Böyle bir email yok");
+		
 	}
 	
 }

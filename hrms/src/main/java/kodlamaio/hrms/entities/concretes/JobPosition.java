@@ -29,7 +29,6 @@ public class JobPosition{
 	
 	@Column(name="title",unique=true)
 	private String positionName;
-	
 
 	@OneToMany(mappedBy = "jobPosition",fetch = FetchType.LAZY)
 	private List<JobAdvertisement> jobAdvertisements;

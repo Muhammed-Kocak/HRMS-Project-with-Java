@@ -4,15 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -20,11 +17,10 @@ import lombok.NoArgsConstructor;
 @Table(name="candidates")
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@PrimaryKeyJoinColumn(name = "user_id",referencedColumnName = "id")
 public class Candidate extends User{
 	
-	@Id
-	@Column(name="`user_id`",nullable=false)
-	private int userId;
 	
 	@Column(name="`first_name`",nullable=false)
 	private String firstName;
@@ -38,16 +34,14 @@ public class Candidate extends User{
 	
 	@Column(name="`birth_of_date`",nullable=false)
 	private Date birthOfDate;
-	
-	@OneToOne(fetch = FetchType.LAZY)	
-	@JoinColumn(name="`id`")
-	private User user;
 
-	public Candidate(int userId, String firstName, String lastName, String nationalityIdentityId, Date birthOfDate) {
-		this.userId = userId;
+	public Candidate(int id, String email, String password, boolean emailVerified, String emailVerifyCode,
+			String firstName, String lastName, String nationalityIdentityId, Date birthOfDate) {
+		super(id, email, password, emailVerified, emailVerifyCode);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.nationalityIdentityId = nationalityIdentityId;
 		this.birthOfDate = birthOfDate;
 	}
+
 }

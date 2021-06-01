@@ -1,8 +1,5 @@
 package kodlamaio.hrms.entities.concretes;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,11 +11,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Data
-@Table(name="users")
-@AllArgsConstructor
-@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="users")
 public class User{
 
 	@Id
@@ -37,6 +31,59 @@ public class User{
 
 	@Column(name="emailVerifyCode",nullable=false)
 	private String emailVerifyCode;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public String getEmailVerifyCode() {
+		return emailVerifyCode;
+	}
+
+	public void setEmailVerifyCode(String emailVerifyCode) {
+		this.emailVerifyCode = emailVerifyCode;
+	}
+
+	public User() {
+		
+	}
+	
+	public User(int id, String email, String password, boolean emailVerified, String emailVerifyCode) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.emailVerified = emailVerified;
+		this.emailVerifyCode = emailVerifyCode;
+	}
 	
 	public User(String email, String password, boolean emailVerified, String emailVerifyCode) {
 		this.email = email;
@@ -44,4 +91,6 @@ public class User{
 		this.emailVerified = emailVerified;
 		this.emailVerifyCode = emailVerifyCode;
 	}
+	
+	
 }
