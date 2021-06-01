@@ -3,7 +3,6 @@ package kodlamaio.hrms.core.adapters.authService;
 import java.rmi.RemoteException;
 
 
-import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 import tr.gov.nvi.tckimlik.WS.KPSPublicSoap;
 import tr.gov.nvi.tckimlik.WS.KPSPublicSoapProxy;

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import lombok.NoArgsConstructor;
 
 @Service
 public class EmailActivationService implements Activation{

@@ -31,5 +31,5 @@ public class EmployersActivationForEmployee {
 	
 	@Column(name="is_confirmed")
 	private boolean isConfirmed;
-
+	
 }
