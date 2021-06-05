@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.adapters.activationService.simplifiedStructure.EmailService;
+import kodlamaio.hrms.core.dataAccess.UserDao;
+import kodlamaio.hrms.core.entities.User;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.dataAccess.abstracts.UserDao;
-import kodlamaio.hrms.entities.concretes.User;
 
 @Service
 public class UserManager implements UserService {
@@ -50,13 +50,15 @@ public class UserManager implements UserService {
 
 	@Override
 	public Result verifyUser(String email, String verificationCode) {
-		User user = userDao.findByEmailAndEmailVerifyCode(email, verificationCode);
-		if (user == null)
+		boolean user = userDao.findByEmail(email).isPresent();
+		if (!user)
 			return new ErrorResult("Doğrulama başarısız lütfen bilgileri doğru girdiğinizden emin olun.");
 
 		user.setEmailVerified(true);
 		userDao.save(user);
 		return new SuccessResult("Kullanıcı e-postası başarıyla doğrulandı.");
+		
+		//TO DO düzenleme yapılacak
 	}
 
 }

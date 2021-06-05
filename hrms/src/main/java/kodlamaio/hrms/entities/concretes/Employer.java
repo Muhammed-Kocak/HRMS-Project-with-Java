@@ -11,19 +11,20 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import kodlamaio.hrms.core.entities.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@Table(name = "Employers")
+@Table(name = "employers")
 @EqualsAndHashCode(callSuper = false)
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobAdvertisements" })
 public class Employer extends User {
 
-	@Column(name = "`company_name`")
-	private String companyName;
+	@Column(name = "`employer_name`")
+	private String employerName;
 
 	@Column(name = "`phone_number`")
 	private String phoneNumber;
@@ -42,9 +43,9 @@ public class Employer extends User {
 	}
 
 	public Employer(String email, String password, boolean emailVerified, String emailVerifyCode,
-			String companyName, String phoneNumber, boolean isVerified, String webAdress) {
+			String employerName, String phoneNumber, boolean isVerified, String webAdress) {
 		super(email, password, emailVerified, emailVerifyCode);
-		this.companyName = companyName;
+		this.employerName = employerName;
 		this.phoneNumber = phoneNumber;
 		this.isVerified = isVerified;
 		this.webAdress = webAdress;

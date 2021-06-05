@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmployeeService;
 import kodlamaio.hrms.business.validations.EmployeeValidation;
-import kodlamaio.hrms.core.utilities.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
@@ -29,7 +28,7 @@ private EmployeeDao employeeDao;
 
 	@Override
 	public DataResult<List<Employee>> getAll() {
-		return new SuccessDataResult<List<Employee>>(this.employeeDao.findAll(),Messages.employeesListed);
+		return new SuccessDataResult<List<Employee>>(this.employeeDao.findAll(),TRVersionMessages.employeesListed);
 	}
 
 	@Override
@@ -38,9 +37,9 @@ private EmployeeDao employeeDao;
 		if(result) {
 			if(EmployeeValidation.firstNameChecker(employee)&&EmployeeValidation.lastNameChecker(employee)) {
 				this.employeeDao.save(employee);
-				return new SuccessResult(Messages.employeeAdded);
+				return new SuccessResult(TRVersionMessages.employeeAdded);
 			}
-			return new ErrorResult(Messages.ValidationIsIncorrect);
+			return new ErrorResult(TRVersionMessages.ValidationIsIncorrect);
 		}
 		return new ErrorResult("Böyle bir email yok");
 		

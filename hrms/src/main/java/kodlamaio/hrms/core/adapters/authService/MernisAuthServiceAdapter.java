@@ -2,7 +2,9 @@ package kodlamaio.hrms.core.adapters.authService;
 
 import java.rmi.RemoteException;
 
-
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
+import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 import tr.gov.nvi.tckimlik.WS.KPSPublicSoap;
 import tr.gov.nvi.tckimlik.WS.KPSPublicSoapProxy;
@@ -10,7 +12,7 @@ import tr.gov.nvi.tckimlik.WS.KPSPublicSoapProxy;
 public class MernisAuthServiceAdapter implements AuthAdapterService{
 	
 	@Override
-	public boolean register(CandidateForRegisterDto candidate){
+	public Result register(CandidateForRegisterDto candidate){
 		KPSPublicSoap proxy = new KPSPublicSoapProxy();
 		try {
 			proxy.TCKimlikNoDogrula(
@@ -18,11 +20,11 @@ public class MernisAuthServiceAdapter implements AuthAdapterService{
 					candidate.getFirstName(),
 					candidate.getLastName(),
 					candidate.getBirthOfDate().getYear());
-			return true;
+			return new SuccessResult();
 		} catch (NumberFormatException | RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
+			return new ErrorResult();
 		}
 	}
 

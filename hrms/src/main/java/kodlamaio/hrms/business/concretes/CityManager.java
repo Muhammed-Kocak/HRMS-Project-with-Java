@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.CityService;
+import kodlamaio.hrms.core.utilities.constants.Messages.EUVersionMessages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
@@ -27,8 +28,18 @@ public class CityManager implements CityService {
 
 	@Override
 	public DataResult<List<City>> getAll() {
+		
+		List<City> result = this.cityDao.findAll();
+		
+		return new SuccessDataResult<List<City>>(
+				result,
+				EUVersionMessages.CitiesListed);
+	}
 
-		return new SuccessDataResult<List<City>>(cityDao.findAll());
+	@Override
+	public Result add(City city) {
+		this.cityDao.save(city);
+		return new SuccessResult(EUVersionMessages.CityAdded);
 	}
 
 	@Override
@@ -39,9 +50,4 @@ public class CityManager implements CityService {
 		return new SuccessDataResult<City>(city);
 	}
 
-	@Override
-	public Result add(City city) {
-		this.cityDao.save(city);
-		return new SuccessResult("Şehir Eklendi");
-	}
 }

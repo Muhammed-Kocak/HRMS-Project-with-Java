@@ -5,12 +5,13 @@ import java.util.List;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.dtos.EmployerForRegisterDto;
 
 public interface EmployerService {
 	DataResult<List<Employer>> getAll();
 
-	DataResult<Employer> getById(int id);
+	DataResult<Employer> getById(int employerId);
 
-	Result register(EmployerForRegisterDto employer);
+	Result add(Employer employer);
+
+	Result delete(int employer);
 }

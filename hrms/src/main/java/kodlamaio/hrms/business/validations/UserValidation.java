@@ -3,7 +3,8 @@ package kodlamaio.hrms.business.validations;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import kodlamaio.hrms.entities.concretes.User;
+import kodlamaio.hrms.core.entities.User;
+
 
 public class UserValidation {
 

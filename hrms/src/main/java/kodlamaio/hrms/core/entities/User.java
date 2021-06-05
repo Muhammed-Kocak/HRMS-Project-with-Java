@@ -1,5 +1,4 @@
-package kodlamaio.hrms.entities.concretes;
-
+package kodlamaio.hrms.core.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,24 +11,24 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="users")
-public class User{
+@Table(name = "users")
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="email")
+
+	@Column(name = "email")
 	private String email;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="emailVerified",nullable=false)
+
+	@Column(name = "emailVerified", nullable = false)
 	private boolean emailVerified;
 
-	@Column(name="emailVerifyCode",nullable=false)
+	@Column(name = "emailVerifyCode", nullable = false)
 	private String emailVerifyCode;
 
 	public int getId() {
@@ -73,9 +72,9 @@ public class User{
 	}
 
 	public User() {
-		
+
 	}
-	
+
 	public User(int id, String email, String password, boolean emailVerified, String emailVerifyCode) {
 		super();
 		this.id = id;
@@ -84,13 +83,12 @@ public class User{
 		this.emailVerified = emailVerified;
 		this.emailVerifyCode = emailVerifyCode;
 	}
-	
+
 	public User(String email, String password, boolean emailVerified, String emailVerifyCode) {
 		this.email = email;
 		this.password = password;
 		this.emailVerified = emailVerified;
 		this.emailVerifyCode = emailVerifyCode;
 	}
-	
-	
+
 }

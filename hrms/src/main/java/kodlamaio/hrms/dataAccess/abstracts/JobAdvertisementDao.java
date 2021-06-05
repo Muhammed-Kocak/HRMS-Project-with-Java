@@ -2,22 +2,30 @@ package kodlamaio.hrms.dataAccess.abstracts;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
+import kodlamaio.hrms.entities.dtos.JobAdvertisementForAddDto;
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Integer> {
-	
-	@Query("SELECT j FROM JobAdvertisement j WHERE j.isActive=true")
-	List<JobAdvertisement> findByIsActiveTrue();
 
-	@Query("SELECT j FROM JobAdvertisement j WHERE j.isActive=true ORDER BY j.dateOfCreate ASC")
-	List<JobAdvertisement> findByIsActiveTrueOrderByCreateDate();
+	List<JobAdvertisement> getByActiveTrue();
 
-	@Query("SELECT j FROM JobAdvertisement j WHERE j.isActive=true AND j.id=?1")
-	List<JobAdvertisement> findByIsActiveTrueAndEmployer_UserId(int userId);
+	Page<JobAdvertisement> getByActiveTrue(Pageable pageable);
 
-	@Query("SELECT j FROM JobAdvertisement j, Employer e WHERE j.id=?1 AND e.id=?2")
-	JobAdvertisement findByIdAndEmployer_UserId(int jobAdvertisementId, int employerId);
+	List<JobAdvertisement> getByActiveTrueOrderByLastApplyDateAsc();
+
+	List<JobAdvertisement> getByActiveTrueOrderByLastApplyDateDesc();
+
+	List<JobAdvertisement> getByActiveTrueAndEmployer_companyName(String companyName);
+
+	@Query("Select new kodlamaio.hrms.entities.dtos."
+			+ "JobAdvertisementForAddDto(e.companyName, t.name, cty.cityName, j.numberOfOpenPositions, j.dateOfCreate, j.lastApplyDate) "
+			+ "from JobAdvertisement j " + "Inner join j.jobPosition t " + "Inner join j.employer e "
+			+ "Inner join j.city cty")
+
+	List<JobAdvertisementForAddDto> getJobAdvertisementWithEmployer();
 }

@@ -1,6 +1,6 @@
-package kodlamaio.hrms.core.utilities.constants;
+package kodlamaio.hrms.core.utilities.constants.Messages;
 
-public class Messages {
+public class TRVersionMessages {
 
 	//General
 	 public static String maintenanceTime = "The system is under maintenance.";
@@ -22,12 +22,12 @@ public class Messages {
     public static String cccessTokenCreated = "Access token has created.";
 	
 	// Employer
-	public static String employersListed = "İş verenler Listelendi";
-	public static String employerListed = "İş veren Listelendi";
-	public static String employerAdded = "İş verenler Eklendi";
-	public static String employerDeleted = "İş verenler Silindi";
-	public static String employerUpdated = "İş verenler Güncellendi";
-	public static String employerValid = "İş veren mevcut";
+	public static String EmployersListed = "İş verenler Listelendi";
+	public static String EmployerListedById = "İş veren Listelendi";
+	public static String EmployerAdded = "İş verenler Eklendi";
+	public static String EmployerDeleted = "İş verenler Silindi";
+	public static String EmployerUpdated = "İş verenler Güncellendi";
+	public static String ErrorEmployerEmailInvalid = "İş veren mevcut";
 
 	// Employee
 	public static String employeesListed = "Çalışanlar Listelendi";
@@ -45,7 +45,7 @@ public class Messages {
 	public static String userUpdated = "Kullanıcı Güncellendi";
 	public static String userValid = "Kullanıcı mevcut";
 	
-	// Position
+	// JobPosition
 	public static String positionsListed = "Pozisyon getirildi.";
 	public static String positionListed = "Pozisyon getirildi.";
 	public static String positionAdded = "Pozisyon Eklendi";
@@ -55,7 +55,7 @@ public class Messages {
 
 	// Candidate
 	public static String CandidatesListed = "Adaylar getirildi.";
-	public static String CandidateListed = "Aday getirildi.";
+	public static String CandidateListedById = "Aday getirildi.";
 	public static String CandidateAdded = "Aday Eklendi";
 	public static String CandidateAuthUnsuccessful = "Ekleme yapılamadı.. Doğrulama başarısız.";
 	public static String CandidateDeleted = "Aday Silindi";

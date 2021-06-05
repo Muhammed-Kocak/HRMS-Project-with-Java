@@ -1,11 +1,12 @@
-//package kodlamaio.hrms.business.abstracts;
-//
-//import kodlamaio.hrms.core.utilities.results.DataResult;
-//import kodlamaio.hrms.core.utilities.results.Result;
-//import kodlamaio.hrms.entities.concretes.User;
-//
-//public interface AuthService {
-//	DataResult<User> login(User user);
-//	DataResult<User> register(User user);
-//	Result userCheck(String email);
-//}
+package kodlamaio.hrms.business.abstracts;
+
+import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
+import kodlamaio.hrms.entities.dtos.EmployerForRegisterDto;
+
+public interface AuthService {
+
+	Result CandidateRegister(CandidateForRegisterDto candidateForRegisterDto);
+	
+	Result EmployerRegister(EmployerForRegisterDto employerForRegisterDto);
+}

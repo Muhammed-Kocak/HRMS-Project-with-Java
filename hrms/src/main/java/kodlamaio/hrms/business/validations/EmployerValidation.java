@@ -21,8 +21,8 @@ public class EmployerValidation {
 	}
 
 	public static boolean checkCompanyName(Employer employer) {
-		if (employer.getCompanyName().isEmpty() || employer.getCompanyName() == null
-				|| employer.getCompanyName().length() <= 2 || employer.getCompanyName().length() >= 100) {
+		if (employer.getEmployerName().isEmpty() || employer.getEmployerName() == null
+				|| employer.getEmployerName().length() <= 2 || employer.getEmployerName().length() >= 100) {
 			return false;
 		} else {
 			return true;

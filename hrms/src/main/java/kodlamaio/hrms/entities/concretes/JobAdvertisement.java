@@ -1,5 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public class JobAdvertisement {
     private Date dateOfCreate = new Date(System.currentTimeMillis());
 
     @Column(name="last_apply_date",nullable = false)
-    private Date lastApplyDate;
+    private LocalDate lastApplyDate;
 
     @Column(name = "is_active",nullable = false)
     private boolean isActive;
@@ -67,7 +68,7 @@ public class JobAdvertisement {
 	private Employer employer;
 	
 	public JobAdvertisement(String description, Double minSalary, Double maxSalary, int numberOfOpenPositions,
-			Date lastApplyDate, Date dateOfCreate, boolean isActive) {
+			LocalDate lastApplyDate, Date dateOfCreate, boolean isActive) {
 		super();
 		this.description = description;
 		this.minSalary = minSalary;

@@ -8,13 +8,21 @@ import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementForAddDto;
 
 public interface JobAdvertisementService {
-	DataResult<List<JobAdvertisement>> findByIsActiveTrue();
+	DataResult<List<JobAdvertisement>> getAll();
 
-	DataResult<List<JobAdvertisement>> findByIsActiveTrueOrderByCreateDate();
+	DataResult<List<JobAdvertisement>> getByActive();
 
-	DataResult<List<JobAdvertisement>> findByEmployer_EmployerId(int employerId);
+	DataResult<List<JobAdvertisement>> getByActive(int pageNo, int pageSize);
 
-	Result addNew(JobAdvertisementForAddDto jobAdvertisement);
+	DataResult<List<JobAdvertisement>> getByActiveSortedAsc();
 
-	Result changeStatus(int advertisementId, int employerId);
+	DataResult<List<JobAdvertisement>> getByActiveSortedDesc();
+
+	DataResult<List<JobAdvertisementForAddDto>> getJobAdvertisementWithEmployer();
+
+	DataResult<List<JobAdvertisement>> getByActiveTrueAndEmployerCompanyName(String companyName);
+
+	Result add(JobAdvertisement jobAdvertisemenet);
+
+	Result update(int jobAdvertisemenetId, JobAdvertisement jobAdvertisemenet);
 }

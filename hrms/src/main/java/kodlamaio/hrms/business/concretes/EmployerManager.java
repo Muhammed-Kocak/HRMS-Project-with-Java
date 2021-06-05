@@ -1,90 +1,111 @@
 package kodlamaio.hrms.business.concretes;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
-import kodlamaio.hrms.business.abstracts.UserService;
-import kodlamaio.hrms.core.utilities.constants.Messages;
+import kodlamaio.hrms.core.business.BusinessRules;
+import kodlamaio.hrms.core.utilities.constants.Messages.EUVersionMessages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.concretes.User;
-import kodlamaio.hrms.entities.dtos.EmployerForRegisterDto;
 
 @Service
 public class EmployerManager implements EmployerService {
 
 	private EmployerDao employerDao;
-	private UserService userService;
+	
 
 	@Autowired
-	public EmployerManager(EmployerDao employerDao,UserService userService) {
+	public EmployerManager(
+			EmployerDao employerDao) {
 		this.employerDao = employerDao;
-		this.userService = userService;
 	}
 
 	@Override
 	public DataResult<List<Employer>> getAll() {
-		return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), Messages.employerListed);
-	}
-//employer.getCompanyName(),employer.getPhoneNumber(), false, employer.getWebAdress()
-	@Override
-	public Result register(EmployerForRegisterDto employer) {
-		if(runAllRegisterRules(employer) != null) return runAllRegisterRules(employer);
-		User userToRegister = new User(employer.getEmail(), employer.getPassword(),false, UUID.randomUUID().toString());
-		userService.add(userToRegister);
-		Employer employerToRegister = new Employer();
-		employerToRegister.setEmail(employer.getCompanyName());
-		employerToRegister.setEmailVerified(false);
-		employerToRegister.setEmailVerifyCode( UUID.randomUUID().toString());
-		employerToRegister.setPassword(employer.getPassword());
-		this.employerDao.save(employerToRegister);
-		return new SuccessResult("İş veren başarıyla kayıt oldu. Lütfen e-posta adresinize gönderilen linke tıklayarak üyeliğinizi doğrulayın.");
-	}
-	@Override
-	public DataResult<Employer> getById(int id) {
-		Employer employer = employerDao.getOne(id);
-		if(employer==null) return new ErrorDataResult<Employer>();
-		return new SuccessDataResult<Employer>(employer);
+		List<Employer> result = this.employerDao.findAll();
+		return new SuccessDataResult<List<Employer>>(result, EUVersionMessages.EmployersListed);
 	}
 
-	private Result runAllRegisterRules(EmployerForRegisterDto employer) {
-		if(isAllFieldsFilled(employer) != null) return isAllFieldsFilled(employer);
-		if(isPasswordsSame(employer) != null) return isPasswordsSame(employer);
-		if(isEmailandWebsiteDomainSame(employer) != null) return isEmailandWebsiteDomainSame(employer);
-		if(isEmailAlreadyInUse(employer) != null) return isEmailAlreadyInUse(employer);
+	@Override
+	public DataResult<Employer> getById(int employerId) {
 		return null;
 	}
 
-	private Result isAllFieldsFilled(EmployerForRegisterDto employer) {
-		if(employer.getCompanyName() == null || employer.getPhoneNumber() == null || employer.getWebAdress() == null || employer.getEmail() == null ||
-				   employer.getPassword() == null || employer.getVerifyPassword() == null) return new ErrorResult("Hiç bir alan boş bırakılmamalıdır.");
-		if(employer.getCompanyName().equals("") || employer.getPhoneNumber().equals("") || employer.getWebAdress().equals("") || employer.getEmail().equals("") ||
-				   employer.getPassword().equals("") || employer.getVerifyPassword().equals("")) return new ErrorResult("Hiç bir alan boş bırakılmamalıdır.");
-		return null;
-	}	
-	private Result isPasswordsSame(EmployerForRegisterDto employer) {
-		if(!employer.getPassword().equals(employer.getVerifyPassword())) return new ErrorResult("Şifreleriniz uyuşmuyor.");
+	@Override
+	public Result add(Employer employer) {
+			
+		
+		Result rules = BusinessRules.Run(
+				checkEmployerExists(employer.getEmail())
+		);
+		if(rules != null) {
+			return rules;
+		}
+		
+		Result isEmailVerificate = checkEmailVerification(employer);		
+		if(!isEmailVerificate.isSuccess()) {
+			return isEmailVerificate;
+		}
+		
+		Result isConfirm = checkEmployeesConfirmation(employer);
+		if(!isConfirm.isSuccess()) {
+			return isConfirm;
+		}
+		
+		employer.setVerified(true);
+		employerDao.save(employer);
+		
+		return new SuccessResult(EUVersionMessages.EmployerAdded);
+	}
+
+	@Override
+	public Result delete(int employerId) {
 		return null;
 	}
-	private Result isEmailandWebsiteDomainSame(EmployerForRegisterDto employer) {
-		String email = employer.getEmail();
-		String[] emailSplit = email.split("@");
-		if(!emailSplit[1].equals(employer.getWebAdress())) return new ErrorResult("E-posta adresinizin domaini web siteniz ile aynı olmalıdır.");
-		return null;
+	
+	public Result checkEmployeesConfirmation(Employer employer) {
+//		Result employerVerificationResult = this.verificationManager
+//				.employerVerificationByEmployee(employer);
+//		if (!employerVerificationResult.isSuccess()) {
+//			return new ErrorResult(employerVerificationResult.getMessage());
+		
+//		} //TO DO verification işlemleri değiştirilecek
+//		
+		return new SuccessResult();
 	}
-	private Result isEmailAlreadyInUse(EmployerForRegisterDto employer) {
-		if(userService.getByEmail(employer.getEmail()).getData() != null) return new ErrorResult("Bu e-posta adresiyle kayıtlı bir kullanıcı var.");
-		return null;
+	
+	public Result checkEmployerExists(String email) {
+		boolean employerExists = this.employerDao
+				.findByEmail(email)
+				.isPresent();
+		if (employerExists) {
+			return new ErrorResult(EUVersionMessages.ErrorEmployerExists);
+		}
+		
+		return new SuccessResult();
+	}
+	
+	public Result checkEmailVerification(Employer company) {
+		
+//		String email = company.getEmail();
+//		
+//		Result verificationMailResult = this.verificationManager
+//				.verificateMail(email);
+//		
+//		if (!verificationMailResult.isSuccess()) {
+//			return verificationMailResult;
+//		}
+		return new SuccessResult();
+	
+			//TO DO verification işlemleri değiştirilecek
 	}
 
 }
