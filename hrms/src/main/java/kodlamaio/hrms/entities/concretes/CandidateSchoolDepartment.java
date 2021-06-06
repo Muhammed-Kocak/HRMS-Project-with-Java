@@ -38,7 +38,7 @@ public class CandidateSchoolDepartment {
 	private SchoolDepartment schoolDepartment;
 	
 	@ManyToOne
-	@JoinColumn(name="job_seeker_id")
+	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 	
 }

@@ -34,7 +34,7 @@ public class CandidatePhoto {
 	private LocalDate uploadedDate;
 	
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 
 	

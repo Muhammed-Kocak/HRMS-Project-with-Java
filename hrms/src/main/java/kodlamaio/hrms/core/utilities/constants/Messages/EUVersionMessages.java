@@ -1,5 +1,7 @@
 package kodlamaio.hrms.core.utilities.constants.Messages;
 
+
+
 public class EUVersionMessages {
 	
 	//General
@@ -12,6 +14,7 @@ public class EUVersionMessages {
 	public static String JobPositionAdded = "Job position added.";
 	public static String JobPositionDeleted = "Job position deleted.";
 	public static String JobPositionUpdated = "Job position updated.";
+	public static String ErrorWithTheSameName = "Two jobs position with the same name cannot be created.";
 
 	// Candidate
 	public static String CandidatesListed = "Candidates listed.";

@@ -18,7 +18,7 @@ public interface JobAdvertisementService {
 
 	DataResult<List<JobAdvertisement>> getByActiveSortedDesc();
 
-	DataResult<List<JobAdvertisementForAddDto>> getJobAdvertisementWithEmployer();
+//	DataResult<List<JobAdvertisementForAddDto>> getJobAdvertisementWithEmployer();
 
 	DataResult<List<JobAdvertisement>> getByActiveTrueAndEmployerCompanyName(String companyName);
 

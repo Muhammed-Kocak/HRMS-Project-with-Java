@@ -18,4 +18,5 @@ public interface JobPositionService {
 	Result delete(int jobPositionId);
 
 	Result update(int jobPositionId, String jobPositionName);
+
 }

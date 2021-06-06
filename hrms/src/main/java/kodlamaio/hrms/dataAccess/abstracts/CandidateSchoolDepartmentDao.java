@@ -8,7 +8,7 @@ import kodlamaio.hrms.entities.concretes.CandidateSchoolDepartment;
 
 public interface CandidateSchoolDepartmentDao extends JpaRepository<CandidateSchoolDepartment, Integer> {
 	
-//	TODO: JobSeeker Id ye göre JobSeekerSchoolDepartment listesi getir,
+//	TODO: Candidate Id ye göre CandidateSchoolDepartment listesi getir,
 //	 ancak mezuniyet tarihine göre sıralanmış olucak.
 	
 	List<CandidateSchoolDepartment> getByCandidate_idOrderByDateOfGraduationDesc(

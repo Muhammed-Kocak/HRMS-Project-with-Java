@@ -32,7 +32,7 @@ public class CvDetail {
 	private String cvPhotoUrl;
 	
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 
 }

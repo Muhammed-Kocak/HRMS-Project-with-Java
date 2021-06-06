@@ -9,29 +9,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.CityService;
+import kodlamaio.hrms.business.abstracts.AbilityService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.City;
+import kodlamaio.hrms.entities.concretes.Ability;
 
 @RestController
-@RequestMapping("/api/cities")
-public class CitiesController {
-	
-	private CityService cityService;
-	
+@RequestMapping("/api/abilitiesController")
+public class AbilitiesController {
+
+
+	private AbilityService abilityService;
+
 	@Autowired
-	public CitiesController(CityService cityService) {
-		this.cityService = cityService;
+	public AbilitiesController(AbilityService abilityService) {
+		this.abilityService = abilityService;
 	}
 	
 	@GetMapping("/getAll")
-	public DataResult<List<City>> getAll() {
-		return this.cityService.getAll();
+	public DataResult<List<Ability>> getAll() {
+		return this.abilityService.getAll();
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody City city) {
-		return this.cityService.add(city);
+	public Result add(@RequestBody Ability ability) {
+		return this.abilityService.add(ability);
 	}
+	
+	
+	
 }

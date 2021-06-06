@@ -38,11 +38,11 @@ public class CandidateWorkplaceTitle {
 	private Workplace workplace;
 	
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 	
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="job_position_id")
 	private JobPosition jobPosition;
 	
 	

@@ -12,20 +12,25 @@ import kodlamaio.hrms.entities.dtos.JobAdvertisementForAddDto;
 
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Integer> {
 
-	List<JobAdvertisement> getByActiveTrue();
+	JobAdvertisement getById(int jobAdvertisemenetId);
+	
+	List<JobAdvertisement> getByIsActiveTrue();
 
-	Page<JobAdvertisement> getByActiveTrue(Pageable pageable);
+	Page<JobAdvertisement> getByIsActiveTrue(Pageable pageable);
 
-	List<JobAdvertisement> getByActiveTrueOrderByLastApplyDateAsc();
+	List<JobAdvertisement> getByIsActiveTrueOrderByLastApplyDateAsc();
 
-	List<JobAdvertisement> getByActiveTrueOrderByLastApplyDateDesc();
+	List<JobAdvertisement> getByIsActiveTrueOrderByLastApplyDateDesc();
 
-	List<JobAdvertisement> getByActiveTrueAndEmployer_companyName(String companyName);
+	List<JobAdvertisement> getByIsActiveTrueAndEmployer_companyName(String companyName);
 
-	@Query("Select new kodlamaio.hrms.entities.dtos."
-			+ "JobAdvertisementForAddDto(e.companyName, t.name, cty.cityName, j.numberOfOpenPositions, j.dateOfCreate, j.lastApplyDate) "
-			+ "from JobAdvertisement j " + "Inner join j.jobPosition t " + "Inner join j.employer e "
-			+ "Inner join j.city cty")
+//	@Query("Select new kodlamaio.hrms.entities.dtos."
+//			+ "JobAdvertisementForAddDto(e.companyName, t.name, cty.cityName, j.numberOfOpenPositions, j.dateOfCreate, j.lastApplyDate) "
+//			+ "from JobAdvertisement j " + "Inner join j.jobPosition t " + "Inner join j.employer e "
+//			+ "Inner join j.city cty")
+//	List<JobAdvertisementForAddDto> getJobAdvertisementWithEmployer();
 
-	List<JobAdvertisementForAddDto> getJobAdvertisementWithEmployer();
+
+
+	
 }

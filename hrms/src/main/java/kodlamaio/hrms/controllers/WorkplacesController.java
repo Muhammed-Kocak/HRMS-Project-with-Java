@@ -1,5 +1,6 @@
 package kodlamaio.hrms.controllers;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,29 +10,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.CityService;
+import kodlamaio.hrms.business.abstracts.WorkplaceService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.City;
+import kodlamaio.hrms.entities.concretes.Workplace;
 
 @RestController
-@RequestMapping("/api/cities")
-public class CitiesController {
-	
-	private CityService cityService;
-	
+@RequestMapping("/api/workplacesController")
+public class WorkplacesController {
+
+	private WorkplaceService workplaceService;
+
 	@Autowired
-	public CitiesController(CityService cityService) {
-		this.cityService = cityService;
+	public WorkplacesController(WorkplaceService workplaceService) {
+		this.workplaceService = workplaceService;
 	}
 	
 	@GetMapping("/getAll")
-	public DataResult<List<City>> getAll() {
-		return this.cityService.getAll();
+	public DataResult<List<Workplace>> getAll() {
+		return this.workplaceService.getAll();
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody City city) {
-		return this.cityService.add(city);
+	public Result add(@RequestBody Workplace workplace) {
+		return this.workplaceService.add(workplace);
 	}
+	
 }

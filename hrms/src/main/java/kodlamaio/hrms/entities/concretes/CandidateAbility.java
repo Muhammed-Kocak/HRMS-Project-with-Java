@@ -26,7 +26,7 @@ public class CandidateAbility {
 	private int candidateAbilityId;
 	
 	@ManyToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 	
 	@ManyToOne

@@ -48,7 +48,7 @@ public class JobPositionsController {
 
 	@GetMapping("/getbyname")
 	public DataResult<JobPosition> getByPositionName(String positionName) {
-		var result = this.jobPositionService.getByPositionName(positionName);
+		var result = this.jobPositionService.getByName(positionName);
 
 		if (result.isSuccess()) {
 			return result;

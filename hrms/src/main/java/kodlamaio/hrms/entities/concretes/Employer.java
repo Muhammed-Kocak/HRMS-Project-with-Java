@@ -23,8 +23,8 @@ import lombok.EqualsAndHashCode;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobAdvertisements" })
 public class Employer extends User {
 
-	@Column(name = "`employer_name`")
-	private String employerName;
+	@Column(name = "`company_name`")
+	private String companyName;
 
 	@Column(name = "`phone_number`")
 	private String phoneNumber;
@@ -43,9 +43,9 @@ public class Employer extends User {
 	}
 
 	public Employer(String email, String password, boolean emailVerified, String emailVerifyCode,
-			String employerName, String phoneNumber, boolean isVerified, String webAdress) {
+			String companyName, String phoneNumber, boolean isVerified, String webAdress) {
 		super(email, password, emailVerified, emailVerifyCode);
-		this.employerName = employerName;
+		this.companyName = companyName;
 		this.phoneNumber = phoneNumber;
 		this.isVerified = isVerified;
 		this.webAdress = webAdress;
